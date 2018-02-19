@@ -40,6 +40,7 @@
 			<Add library="opengl32" />
 			<Add directory="C:/glfw/lib-mingw" />
 		</Linker>
+		<Unit filename="fragmentShader.txt" />
 		<Unit filename="glad.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -50,6 +51,7 @@
 		<Unit filename="src/ObjectRender.cpp" />
 		<Unit filename="src/box.cpp" />
 		<Unit filename="src/renderer.cpp" />
+		<Unit filename="vertexShader.txt" />
 		<Extensions>
 			<code_completion />
 			<envvars />

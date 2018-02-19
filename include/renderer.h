@@ -2,6 +2,9 @@
 #define RENDERER_H
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <string>
+#include <fstream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -16,11 +19,15 @@ class Renderer
         void loadModel(ObjectRender*);
         void renderObjects();
 
+        bool windowShouldClose();
     private:
         std::vector<ObjectRender*> objects;
         std::vector<unsigned int> VAOs;
-        int numVAOs{0};
+        int objNum{0};
+        ObjectRender* renObj;
         GLFWwindow* window;
+        void getShader();
+        unsigned int shaderID;
 };
 
 #endif // RENDERER_H

@@ -3,6 +3,7 @@
 Box::Box(std::vector<float> vert) :
     ObjectRender::ObjectRender(vert)
 {
+    //vert =
     //ctor
 }
 
