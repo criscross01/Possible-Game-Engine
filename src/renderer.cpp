@@ -28,6 +28,8 @@ Renderer::Renderer(int width, int height, const char* name)
     glViewport(0,0,width,height);
 
     getShader();
+
+    perspective = glm::perspective(glm::radians(45.0f),(float)width/(float)height,0.1f,100.0f);
 }
 
 Renderer::~Renderer()
@@ -47,7 +49,12 @@ void Renderer::loadModel(ObjectRender* obj){
         glGenVertexArrays(1,&VAO);
         glGenBuffers(1,&VBO);
 
-        float* verts = obj->getVerts().data();
+        std::vector<float> vertices = obj->getVerts();
+        float verts[obj->getVertsSize()-1];
+
+        for (int i{0}; i < obj->getVertsSize(); i++){
+            verts[i] = vertices[i];
+        }
 
         glBindVertexArray(VAO);
 
@@ -99,11 +106,17 @@ void Renderer::renderObjects(){
 
     for(int i = 0; i < objNum; i++)
     {
+        glm::mat4 trans;
+
         renObj = objects[i];
 
+        trans = glm::translate(trans,glm::vec3(renObj->trans.xPos,renObj->trans.yPos,renObj->trans.zPos));
+        trans = glm::rotate(trans,(float)glm::radians(renObj->trans.xRot),glm::vec3(0.0,0.0,1.0));
         glUseProgram(shaderID);
+        glUniformMatrix4fv(glGetUniformLocation(shaderID,"transform"),1,GL_FALSE,glm::value_ptr(trans));
+        glUniformMatrix4fv(glGetUniformLocation(shaderID,"persp"),1,GL_FALSE,glm::value_ptr(perspective));
         glBindVertexArray(renObj->VAO);
-        glDrawArrays(GL_TRIANGLES,0,sizeof(renObj->getVerts())/sizeof(float));
+        glDrawArrays(GL_TRIANGLES,0,renObj->getVertsSize());
     }
 
     glfwSwapBuffers(window);

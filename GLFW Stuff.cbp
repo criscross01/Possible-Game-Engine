@@ -49,7 +49,6 @@
 		<Unit filename="include/renderer.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/ObjectRender.cpp" />
-		<Unit filename="src/box.cpp" />
 		<Unit filename="src/renderer.cpp" />
 		<Unit filename="vertexShader.txt" />
 		<Extensions>

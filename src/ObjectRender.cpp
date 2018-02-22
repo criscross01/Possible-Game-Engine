@@ -15,3 +15,7 @@ ObjectRender::~ObjectRender()
 std::vector<float> ObjectRender::getVerts(){
     return verts;
 }
+
+int ObjectRender::getVertsSize(){
+    return verts.size();
+}
