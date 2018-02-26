@@ -20,9 +20,9 @@ class ObjectRender
             double yScale{1};
             double zScale{1};
 
-            double xRot{45};
+            double xRot{0};
             double yRot{0};
-            double zRot{0};
+            double zRot{50};
         }trans;
     private:
         std::vector<float> verts;

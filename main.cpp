@@ -7,20 +7,45 @@
 #include "renderer.h"
 
 int main(){
-std::vector<float> squareVerts =
-{-1.0f,-1.0f, 0.0f,
-  1.0f,-1.0f, 0.0f,
-  1.0f, 1.0f, 0.0f, //Triangle 1
+std::vector<float> triVerts =
+{
+    -1.0f,-1.0f, 1.0f,
+     1.0f,-1.0f, 1.0f,
+     1.0f, 1.0f, 1.0f
+};
 
-// -1.0f,-1.0f, 0.0f,
-// -1.0f, 1.0f, 0.0f,
-//  1.0f, 1.0f, 0.0f //Triangle 2
+std::vector<float> cubeVerts =
+{-1.0f,-1.0f, 1.0f,
+  1.0f,-1.0f, 1.0f,
+  1.0f, 1.0f, 1.0f, //Triangle 1
+
+ -1.0f,-1.0f, 1.0f,
+ -1.0f, 1.0f, 1.0f,
+  1.0f, 1.0f, 1.0f, //Triangle 2
+  //Square 1
+
+  -1.0f, 1.0f, 1.0f,
+  -1.0f, 1.0f,-1.0f,
+  -1.0f,-1.0f,-1.0f,
+
+  -1.0f,-1.0f, 1.0f,
+  -1.0f, 1.0f, 1.0f,
+  -1.0f,-1.0f,-1.0f,
+
+   1.0f, 1.0f, 1.0f,
+   1.0f, 1.0f,-1.0f,
+   1.0f,-1.0f,-1.0f,
+
+   1.0f,-1.0f, 1.0f,
+   1.0f, 1.0f, 1.0f,
+   1.0f,-1.0f,-1.0f
   };
 
-ObjectRender square(squareVerts);
+ObjectRender triangle(triVerts);
+ObjectRender cube(cubeVerts);
 Renderer renderer(800,600,"GAME ENGINE");
 
-renderer.loadModel(&square);
+renderer.loadModel(&cube);
 
 while (!renderer.windowShouldClose()){
     renderer.renderObjects();

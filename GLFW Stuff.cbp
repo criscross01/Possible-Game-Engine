@@ -45,7 +45,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="include/ObjectRender.h" />
-		<Unit filename="include/box.h" />
 		<Unit filename="include/renderer.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/ObjectRender.cpp" />

@@ -12,7 +12,7 @@ Renderer::Renderer(int width, int height, const char* name)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,3);
     glfwWindowHint(GLFW_OPENGL_PROFILE,GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(width,height, name, NULL, NULL);
+    window = glfwCreateWindow(width, height, name, NULL, NULL);
     if (window == NULL){
         std::cerr << "Window is NULL" << std::endl;
         glfwTerminate();
@@ -29,7 +29,11 @@ Renderer::Renderer(int width, int height, const char* name)
 
     getShader();
 
-    perspective = glm::perspective(glm::radians(45.0f),(float)width/(float)height,0.1f,100.0f);
+    perspective = glm::perspective(glm::radians(45.0f),(float)width/(float)height,0.0f,100.0f);
+
+    view = glm::lookAt(glm::vec3(0.0f,0.0f,3.0f),
+                       glm::vec3(0.0f,0.0f,0.0f),
+                       glm::vec3(0.0f,1.0f,0.0f));
 }
 
 Renderer::~Renderer()
@@ -43,7 +47,7 @@ void Renderer::loadModel(ObjectRender* obj){
     objNum ++;
 
     if (obj->VAO == 0){
-        std::cout << "VAO for this object uninitialized" << std::endl;
+        std::cout << "VAO for this object uninitialized.  Giving object VAO" << std::endl;
 
         unsigned int VBO,VAO;
         glGenVertexArrays(1,&VAO);
@@ -101,8 +105,10 @@ void Renderer::getShader(){
 
 void Renderer::renderObjects(){
 
+    //glEnable(GL_DEPTH_TEST);
+
     glClearColor(0.2f,0.3f,0.3f,1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for(int i = 0; i < objNum; i++)
     {
@@ -112,8 +118,12 @@ void Renderer::renderObjects(){
 
         trans = glm::translate(trans,glm::vec3(renObj->trans.xPos,renObj->trans.yPos,renObj->trans.zPos));
         trans = glm::rotate(trans,(float)glm::radians(renObj->trans.xRot),glm::vec3(0.0,0.0,1.0));
+        trans = glm::rotate(trans,(float)glm::radians(renObj->trans.yRot),glm::vec3(1.0,0.0,0.0));
+        trans = glm::rotate(trans,(float)glm::radians(renObj->trans.zRot),glm::vec3(0.0,1.0,0.0));
+        trans = glm::scale(trans, glm::vec3(renObj->trans.xScale,renObj->trans.yScale,renObj->trans.zScale));
         glUseProgram(shaderID);
         glUniformMatrix4fv(glGetUniformLocation(shaderID,"transform"),1,GL_FALSE,glm::value_ptr(trans));
+        glUniformMatrix4fv(glGetUniformLocation(shaderID,"view"),1,GL_FALSE,glm::value_ptr(view));
         glUniformMatrix4fv(glGetUniformLocation(shaderID,"persp"),1,GL_FALSE,glm::value_ptr(perspective));
         glBindVertexArray(renObj->VAO);
         glDrawArrays(GL_TRIANGLES,0,renObj->getVertsSize());
