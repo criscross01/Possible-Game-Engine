@@ -49,6 +49,7 @@ renderer.loadModel(&cube);
 
 while (!renderer.windowShouldClose()){
     renderer.renderObjects();
+    cube.color.red = sin(glfwGetTime())+1;
 }
 
 return 0;

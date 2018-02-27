@@ -125,6 +125,7 @@ void Renderer::renderObjects(){
         glUniformMatrix4fv(glGetUniformLocation(shaderID,"transform"),1,GL_FALSE,glm::value_ptr(trans));
         glUniformMatrix4fv(glGetUniformLocation(shaderID,"view"),1,GL_FALSE,glm::value_ptr(view));
         glUniformMatrix4fv(glGetUniformLocation(shaderID,"persp"),1,GL_FALSE,glm::value_ptr(perspective));
+        glUniform3f(glGetUniformLocation(shaderID,"color"),renObj->color.red,renObj->color.green,renObj->color.blue);
         glBindVertexArray(renObj->VAO);
         glDrawArrays(GL_TRIANGLES,0,renObj->getVertsSize());
     }
