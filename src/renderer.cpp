@@ -1,5 +1,17 @@
 #include "renderer.h"
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
+
+void processInput(GLFWwindow *window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+}
+
+
 Renderer::Renderer(int width, int height, const char* name)
 {
     if(!glfwInit()){
@@ -24,12 +36,19 @@ Renderer::Renderer(int width, int height, const char* name)
         std::cout << "GLAD not initialized" << std::endl;
         return;
     }
+    glEnable(GL_DEPTH_TEST);
+
+    //glDepthFunc(GL_GREATER);
+
+    //glDepthRange(1.0,0.0);
 
     glViewport(0,0,width,height);
 
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
     getShader();
 
-    perspective = glm::perspective(glm::radians(45.0f),(float)width/(float)height,0.0f,100.0f);
+    perspective = glm::perspective(glm::radians(45.0f),(float)width/(float)height,0.1f,100.0f);
 
     view = glm::lookAt(glm::vec3(0.0f,0.0f,3.0f),
                        glm::vec3(0.0f,0.0f,0.0f),
@@ -65,8 +84,11 @@ void Renderer::loadModel(ObjectRender* obj){
         glBindBuffer(GL_ARRAY_BUFFER,VBO);
         glBufferData(GL_ARRAY_BUFFER,sizeof(verts),verts,GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0,3, GL_FLOAT,GL_FALSE,3*sizeof(float),(void*)0);
+        glVertexAttribPointer(0,3, GL_FLOAT,GL_FALSE,6*sizeof(float),(void*)0);
         glEnableVertexAttribArray(0);
+
+        glVertexAttribPointer(1,3, GL_FLOAT,GL_FALSE,6*sizeof(float),(void*)(3*sizeof(float)));
+        glEnableVertexAttribArray(1);
 
         glBindVertexArray(0);
         obj->VAO=VAO;
@@ -105,10 +127,14 @@ void Renderer::getShader(){
 
 void Renderer::renderObjects(){
 
-    //glEnable(GL_DEPTH_TEST);
+    processInput(window);
 
-    glClearColor(0.2f,0.3f,0.3f,1.0f);
+    glClearColor(0.2f,0.3f,0.5f,1.0f);
+
+    //glEnable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glUseProgram(shaderID);
 
     for(int i = 0; i < objNum; i++)
     {
@@ -121,15 +147,18 @@ void Renderer::renderObjects(){
         trans = glm::rotate(trans,(float)glm::radians(renObj->trans.yRot),glm::vec3(1.0,0.0,0.0));
         trans = glm::rotate(trans,(float)glm::radians(renObj->trans.zRot),glm::vec3(0.0,1.0,0.0));
         trans = glm::scale(trans, glm::vec3(renObj->trans.xScale,renObj->trans.yScale,renObj->trans.zScale));
-        glUseProgram(shaderID);
+
         glUniformMatrix4fv(glGetUniformLocation(shaderID,"transform"),1,GL_FALSE,glm::value_ptr(trans));
         glUniformMatrix4fv(glGetUniformLocation(shaderID,"view"),1,GL_FALSE,glm::value_ptr(view));
         glUniformMatrix4fv(glGetUniformLocation(shaderID,"persp"),1,GL_FALSE,glm::value_ptr(perspective));
         glUniform3f(glGetUniformLocation(shaderID,"color"),renObj->color.red,renObj->color.green,renObj->color.blue);
+        glUniform3f(glGetUniformLocation(shaderID,"lightPos"),1.2f,1.0f,2.0f);
+
         glBindVertexArray(renObj->VAO);
         glDrawArrays(GL_TRIANGLES,0,renObj->getVertsSize());
     }
 
+    //std::cout << "LOOP!" << std::endl;
     glfwSwapBuffers(window);
     glfwPollEvents();
 }

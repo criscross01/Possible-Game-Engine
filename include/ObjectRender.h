@@ -12,9 +12,9 @@ class ObjectRender
         virtual ~ObjectRender();
 
         struct trnsform {
-            double xPos{0};
+            double xPos{-2};
             double yPos{0};
-            double zPos{-2};
+            double zPos{-3};
 
             double xScale{1};
             double yScale{1};
@@ -22,13 +22,13 @@ class ObjectRender
 
             double xRot{0};
             double yRot{0};
-            double zRot{60};
+            double zRot{0};
         }trans;
 
         struct RGB {
-            float red{1.0f};
+            float red{0.5f};
             float green{1.0f};
-            float blue{1.0f};
+            float blue{0.5f};
         }color;
     private:
         std::vector<float> verts;
