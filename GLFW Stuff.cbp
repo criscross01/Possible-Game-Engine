@@ -45,9 +45,11 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="include/ObjectRender.h" />
+		<Unit filename="include/camera.h" />
 		<Unit filename="include/renderer.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/ObjectRender.cpp" />
+		<Unit filename="src/camera.cpp" />
 		<Unit filename="src/renderer.cpp" />
 		<Unit filename="vertexShader.txt" />
 		<Extensions>

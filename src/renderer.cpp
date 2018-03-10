@@ -127,11 +127,16 @@ void Renderer::getShader(){
 
 void Renderer::renderObjects(){
 
+    float radius = 10.0f;
+    float camX = sin(glfwGetTime()) * radius;
+    float camZ = cos(glfwGetTime()) * radius;
+    glm::mat4 view;
+    view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+
     processInput(window);
 
-    glClearColor(0.2f,0.3f,0.5f,1.0f);
+    //glClearColor(0.2f,0.3f,0.5f,1.0f);
 
-    //glEnable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glUseProgram(shaderID);
@@ -152,7 +157,8 @@ void Renderer::renderObjects(){
         glUniformMatrix4fv(glGetUniformLocation(shaderID,"view"),1,GL_FALSE,glm::value_ptr(view));
         glUniformMatrix4fv(glGetUniformLocation(shaderID,"persp"),1,GL_FALSE,glm::value_ptr(perspective));
         glUniform3f(glGetUniformLocation(shaderID,"color"),renObj->color.red,renObj->color.green,renObj->color.blue);
-        glUniform3f(glGetUniformLocation(shaderID,"lightPos"),1.2f,1.0f,2.0f);
+        glUniform3f(glGetUniformLocation(shaderID,"lightPos"),3.0f,0.0f,3.0f);
+        glUniform3f(glGetUniformLocation(shaderID,"viewPos"),0.0f,0.0f,3.0f);
 
         glBindVertexArray(renObj->VAO);
         glDrawArrays(GL_TRIANGLES,0,renObj->getVertsSize());
@@ -165,4 +171,8 @@ void Renderer::renderObjects(){
 
 bool Renderer::windowShouldClose(){
     return glfwWindowShouldClose(window);
+}
+
+GLFWwindow* Renderer::getWindow(){
+    return window;
 }

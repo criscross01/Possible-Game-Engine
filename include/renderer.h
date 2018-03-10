@@ -22,6 +22,7 @@ class Renderer
         void loadModel(ObjectRender*);
         void renderObjects();
 
+        GLFWwindow* getWindow();
         bool windowShouldClose();
     private:
         std::vector<ObjectRender*> objects;

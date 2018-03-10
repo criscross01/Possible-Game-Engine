@@ -12,7 +12,7 @@ class ObjectRender
         virtual ~ObjectRender();
 
         struct trnsform {
-            double xPos{-2};
+            double xPos{-1};
             double yPos{0};
             double zPos{-3};
 
