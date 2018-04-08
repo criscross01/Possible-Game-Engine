@@ -36,11 +36,7 @@ Renderer::Renderer(int width, int height, const char* name)
         std::cout << "GLAD not initialized" << std::endl;
         return;
     }
-    glEnable(GL_DEPTH_TEST);
-
-    //glDepthFunc(GL_GREATER);
-
-    //glDepthRange(1.0,0.0);
+    //glEnable(GL_DEPTH_TEST);
 
     glViewport(0,0,width,height);
 
@@ -84,11 +80,8 @@ void Renderer::loadModel(ObjectRender* obj){
         glBindBuffer(GL_ARRAY_BUFFER,VBO);
         glBufferData(GL_ARRAY_BUFFER,sizeof(verts),verts,GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0,3, GL_FLOAT,GL_FALSE,6*sizeof(float),(void*)0);
+        glVertexAttribPointer(0,3, GL_FLOAT,GL_FALSE,3*sizeof(float),(void*)0);
         glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(1,3, GL_FLOAT,GL_FALSE,6*sizeof(float),(void*)(3*sizeof(float)));
-        glEnableVertexAttribArray(1);
 
         glBindVertexArray(0);
         obj->VAO=VAO;
@@ -127,17 +120,17 @@ void Renderer::getShader(){
 
 void Renderer::renderObjects(){
 
-    float radius = 10.0f;
-    float camX = sin(glfwGetTime()) * radius;
-    float camZ = cos(glfwGetTime()) * radius;
-    glm::mat4 view;
-    view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+//    float radius = 10.0f;
+//    float camX = sin(glfwGetTime()) * radius;
+//    float camZ = cos(glfwGetTime()) * radius;
+//    glm::mat4 view;
+//    view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 
     processInput(window);
 
     //glClearColor(0.2f,0.3f,0.5f,1.0f);
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(shaderID);
 
@@ -166,7 +159,6 @@ void Renderer::renderObjects(){
 
     //std::cout << "LOOP!" << std::endl;
     glfwSwapBuffers(window);
-    glfwPollEvents();
 }
 
 bool Renderer::windowShouldClose(){
