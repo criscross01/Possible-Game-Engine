@@ -5,13 +5,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-void processInput(GLFWwindow *window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-}
-
-
 Renderer::Renderer(int width, int height, const char* name)
 {
     if(!glfwInit()){
@@ -126,7 +119,7 @@ void Renderer::renderObjects(){
 //    glm::mat4 view;
 //    view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 
-    processInput(window);
+    //processInput(window);
 
     //glClearColor(0.2f,0.3f,0.5f,1.0f);
 

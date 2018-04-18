@@ -571,13 +571,14 @@
 	<windows.h>
 	<dlfcn.h>
 
-1521661025 source:c:\users\cta9207\desktop\possible-game-engine\main.cpp
+1523374048 source:c:\users\cta9207\desktop\possible-game-engine\main.cpp
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	<iostream>
 	<vector>
 	"ObjectRender.h"
 	"renderer.h"
+	"game.h"
 
 1518020413 c:\users\cta9207\desktop\possible-game-engine\include\box.h
 	"ObjectRender.h"
@@ -605,7 +606,7 @@
 1521660616 source:c:\users\cta9207\desktop\possible-game-engine\src\objectrender.cpp
 	"ObjectRender.h"
 
-1521664123 source:c:\users\cta9207\desktop\possible-game-engine\src\renderer.cpp
+1523373854 source:c:\users\cta9207\desktop\possible-game-engine\src\renderer.cpp
 	"renderer.h"
 
 1513624312 c:\glfw\include\glm\glm\gtc\matrix_transform.hpp
@@ -677,4 +678,12 @@
 
 1520627187 c:\users\cta9207\desktop\possible-game-engine\include\camera.h
 	<glm/glm/glm.hpp>
+
+1523377354 source:c:\users\cta9207\desktop\possible-game-engine\src\game.cpp
+	"game.h"
+	<iostream>
+
+1523378256 c:\users\cta9207\desktop\possible-game-engine\include\game.h
+	"renderer.h"
+	"ObjectRender.h"
 

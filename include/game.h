@@ -1,19 +1,21 @@
 #ifndef GAME_H
 #define GAME_H
 #include "renderer.h"
+#include "ObjectRender.h"
 
 class Game
 {
     public:
         Game();
         virtual ~Game();
-        void run();
+        void init();
 
     private:
-        void loop();
+        void run();
+        void update();
         void inputManager(GLFWwindow* window);
 
-        Renderer renderer();
+        Renderer renderer   {Renderer(800,600,"Testing")};
 };
 
 #endif // GAME_H
